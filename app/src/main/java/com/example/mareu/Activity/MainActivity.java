@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
 import android.view.View;
 
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MeetingApiService apiService;
     private List<Meeting> meetings = new ArrayList<>();
+
+    @BindView(R.id.list_meetings)
     private RecyclerView recyclerView;
 
     @Override
