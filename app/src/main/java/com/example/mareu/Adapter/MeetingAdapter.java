@@ -48,10 +48,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         Glide.with(holder.meetingColor.getContext())
                 .load(meeting.getColor())
                 .fitCenter()
-                .apply(RequestOptions.circleCropTransform())
                 .into(holder.meetingColor);
-
-
     }
 
     @Override
