@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
 import com.example.mareu.Model.Meeting;
@@ -28,6 +27,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     private MeetingApiService apiService;
 
     private List<Meeting> meetings = new ArrayList<>();
+
+    public MeetingAdapter(List<Meeting> meetings) {
+        this.meetings = meetings;
+    }
 
 
     @NonNull
@@ -49,6 +52,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                 .load(meeting.getColor())
                 .fitCenter()
                 .into(holder.meetingColor);
+
+        holder.entrants.setText(meeting.getEntrants());
+        // TODO Il va falloir construire le chaîne de caractères qui constituera le nom du meeting.
     }
 
     @Override
@@ -64,8 +70,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         @BindView(R.id.meeting_name)
         TextView meetingName;
 
-        @BindView(R.id.participants)
-        TextView participants;
+        @BindView(R.id.entrants)
+        TextView entrants;
 
         @BindView(R.id.deleteButton)
         ImageButton deleteButton;

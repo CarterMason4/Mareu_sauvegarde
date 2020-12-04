@@ -2,7 +2,9 @@ package com.example.mareu.Activity;
 
 import android.os.Bundle;
 
+import com.example.mareu.Adapter.MeetingAdapter;
 import com.example.mareu.Api.MeetingApiService;
+import com.example.mareu.DI.Di;
 import com.example.mareu.Model.Meeting;
 import com.example.mareu.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -10,13 +12,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +31,35 @@ public class MainActivity extends AppCompatActivity {
     private MeetingApiService apiService;
     private List<Meeting> meetings = new ArrayList<>();
 
-    @BindView(R.id.list_meetings)
-    private RecyclerView recyclerView;
+     private RecyclerView recyclerView;
+
+     private Toolbar toolbar;
+
+     private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        recyclerView = findViewById(R.id.list_meetings);
+        toolbar = findViewById(R.id.toolbar);
+        fab = findViewById(R.id.fab);
+
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        apiService = Di.getMeetingApiService();
+        meetings = apiService.getAllMeetings();
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new MeetingAdapter(meetings));
+
+
+
+        fab.setOnClickListener(view ->
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+                .setAction("Action", null).show());
     }
 
     @Override
@@ -61,10 +77,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.delete_all) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

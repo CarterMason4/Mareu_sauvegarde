@@ -3,8 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.mareu.Activity.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/delete_all"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/delete_all"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_date"
+        android:orderInCategory="100"
+        android:title="@string/filter_date"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/filter_room"
+        android:orderInCategory="100"
+        android:title="@string/filter_room"
+        app:showAsAction="never" />
+
+
 </menu>
