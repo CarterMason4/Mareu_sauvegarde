@@ -1,6 +1,5 @@
 package com.example.mareu.Adapter;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
-import com.example.mareu.Model.Meeting;
+import com.example.mareu.Events.DeleteMeetingEvent;
+import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +28,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
     private MeetingApiService apiService;
 
-    private List<Meeting> meetings = new ArrayList<>();
+    private List<Reunion> reunions = new ArrayList<>();
 
-    public MeetingAdapter(List<Meeting> meetings) {
-        this.meetings = meetings;
+    public MeetingAdapter(List<Reunion> reunions) {
+        this.reunions = reunions;
     }
 
 
@@ -46,20 +48,25 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
-        Meeting meeting = meetings.get(position);
+        Reunion reunion = reunions.get(position);
 
         Glide.with(holder.meetingColor.getContext())
-                .load(meeting.getColor())
+                .load(reunion.getCouleur())
                 .fitCenter()
                 .into(holder.meetingColor);
 
-        holder.entrants.setText(meeting.getEntrants());
-        // TODO Il va falloir construire le chaîne de caractères qui constituera le nom du meeting.
+        holder.entrants.setText(reunion.getEntrants());
+
+        // TODO Il va falloir construire le chaîne de caractères qui constituera le nom du reunion.
+
+        holder.deleteButton.setOnClickListener(v ->
+            EventBus.getDefault().post(
+                    new DeleteMeetingEvent(reunion)));
     }
 
     @Override
     public int getItemCount() {
-        return meetings.size();
+        return reunions.size();
     }
 
     class MeetingViewHolder extends RecyclerView.ViewHolder {

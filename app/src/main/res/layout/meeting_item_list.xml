@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:textStyle="bold"
-        android:text="@string/meeting"
+        android:text="@string/reunion"
         app:layout_constraintStart_toEndOf="@+id/meeting_color"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="15sp"
@@ -46,13 +46,13 @@
         android:layout_marginTop="24dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:maxLength="50"/>
 
     <ImageButton
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:background="@null"
         android:src="@drawable/ic_delete_button"
         app:layout_constraintEnd_toEndOf="parent"

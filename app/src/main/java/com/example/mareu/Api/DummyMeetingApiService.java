@@ -1,28 +1,28 @@
 package com.example.mareu.Api;
 
-import com.example.mareu.Model.Meeting;
+import com.example.mareu.Model.Reunion;
 
 import java.util.List;
 
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private List<Meeting> meetings = DummyMeetingGenerator.getMeetings();
+    private List<Reunion> reunions = DummyMeetingGenerator.getReunions();
 
     @Override
-    public List<Meeting> getAllMeetings() {
-        return meetings;
+    public List<Reunion> getAllMeetings() {
+        return reunions;
     }
 
     @Override
-    public void addMeeting(Meeting meeting) {
-        meetings.add(meeting);
+    public void addMeeting(Reunion reunion) {
+        reunions.add(reunion);
     }
 
     @Override
-    public void deleteMeeting(Meeting meeting) {
-        for(Meeting loopMeeting : meetings) {
-            if(meeting.equals(loopMeeting)) {
-                meetings.remove(meeting);
+    public void deleteMeeting(Reunion reunion) {
+        for(Reunion loopReunion : reunions) {
+            if(loopReunion.equals(reunion)) {
+                reunions.remove(reunion);
                 break;
             }
         }
@@ -30,6 +30,6 @@ public class DummyMeetingApiService implements MeetingApiService {
 
     @Override
     public void deleteAllMeetings() {
-        meetings.clear();
+        reunions.clear();
     }
 }

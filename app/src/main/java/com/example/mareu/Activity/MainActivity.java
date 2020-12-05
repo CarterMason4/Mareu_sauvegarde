@@ -5,7 +5,8 @@ import android.os.Bundle;
 import com.example.mareu.Adapter.MeetingAdapter;
 import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
-import com.example.mareu.Model.Meeting;
+import com.example.mareu.Events.DeleteMeetingEvent;
+import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -17,11 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.view.View;
-
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,37 +33,31 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private MeetingApiService apiService;
-    private List<Meeting> meetings = new ArrayList<>();
+    private List<Reunion> reunions = new ArrayList<>();
+    private MeetingAdapter adapter;
 
-     private RecyclerView recyclerView;
 
-     private Toolbar toolbar;
+     @BindView(R.id.list_meetings)
+     RecyclerView recyclerView;
 
-     private FloatingActionButton fab;
+     @BindView(R.id.toolbar)
+     Toolbar toolbar;
+
+     @BindView(R.id.fab)
+     FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        recyclerView = findViewById(R.id.list_meetings);
-        toolbar = findViewById(R.id.toolbar);
-        fab = findViewById(R.id.fab);
+        ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
 
         apiService = Di.getMeetingApiService();
-        meetings = apiService.getAllMeetings();
 
+        fab.setOnClickListener(v -> makeToast("Ajouter une réunion"));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MeetingAdapter(meetings));
-
-
-
-        fab.setOnClickListener(view ->
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
     }
 
     @Override
@@ -78,11 +76,52 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.delete_all) {
+            apiService.deleteAllMeetings();
+            adapter.notifyDataSetChanged();
+            return true;
+        } else if(id == R.id.filter_date) {
+            return true;
+        } else if(id == R.id.filter_room) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initList();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void deleteMeeting(DeleteMeetingEvent event) {
+        apiService.deleteMeeting(event.reunion);
+        initList();
+    }
+
+    private void initList() {
+        reunions = apiService.getAllMeetings();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MeetingAdapter(reunions);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void makeToast(String string) {
+        Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+    }
 }

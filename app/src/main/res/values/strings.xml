@@ -2,19 +2,14 @@
     <string name="app_name">Ma réu</string>
     <string name="action_settings">Settings</string>
 
-    <string name="delete_all">Delete all</string>
-    <string name="filter_room">Filter by room</string>
-    <string name="filter_date">Filter by date</string>
+    <string name="supprimer_tout">Tout supprimer</string>
+    <string name="filtre_salle">Filtrer par salle</string>
+    <string name="filtre_date">Filtrer par date</string>
 
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-    <string name="meeting">Réunion A - 14h00 - Peach</string>
+    <string name="reunion">Réunion A - 14h00 - Peach</string>
     <string name="emails">nicolas@lamzone.com, bill@lamzone.com</string>
 </resources>

@@ -3,7 +3,7 @@ package com.example.mareu.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Meeting implements Parcelable {
+public class Reunion implements Parcelable {
 
     /**
      * ID of the meeting in the list
@@ -14,11 +14,11 @@ public class Meeting implements Parcelable {
 
 
     /**
-     * Color of the meeting
-     * @param color
+     * Couleur de la réunion
+     * @param couleur
     * */
 
-    private int color;
+    private int couleur;
 
 
     /**
@@ -55,12 +55,11 @@ public class Meeting implements Parcelable {
      * */
     private String subject;
 
-    public Meeting() {}
 
 
-    public Meeting(int id, int color, String date, String time, String room, String entrants, String subject) {
+    public Reunion(int id, int couleur, String date, String time, String room, String entrants, String subject) {
         setId(id);
-        setColor(color);
+        setCouleur(couleur);
         setDate(date);
         setTime(time);
         setRoom(room);
@@ -74,8 +73,8 @@ public class Meeting implements Parcelable {
         return id;
     }
 
-    public int getColor() {
-        return color;
+    public int getCouleur() {
+        return couleur;
     }
 
     public String getDate() {
@@ -102,9 +101,11 @@ public class Meeting implements Parcelable {
         this.id = id;
     }
 
-    public void setColor(int color) {
-        this.color = color;
+    public void setCouleur(int couleur) {
+        this.couleur = couleur;
     }
+
+    // TODO Supprimer la vérification des NullPointerException
 
     public void setDate(String date) {
         if(date.isEmpty() || date == null) {
@@ -131,7 +132,7 @@ public class Meeting implements Parcelable {
     }
 
     public void setEntrants(String entrants) {
-        if(entrants.isEmpty() ||entrants == null) {
+        if(entrants.isEmpty() || entrants == null) {
             this.entrants = "";
         } else {
             this.entrants = entrants;
@@ -160,9 +161,9 @@ public class Meeting implements Parcelable {
 
 
 
-    protected Meeting(Parcel in) {
+    protected Reunion(Parcel in) {
         id = in.readInt();
-        color = in.readInt();
+        couleur = in.readInt();
         date = in.readString();
         time = in.readString();
         room = in.readString();
@@ -173,7 +174,7 @@ public class Meeting implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeInt(color);
+        dest.writeInt(couleur);
         dest.writeString(date);
         dest.writeString(time);
         dest.writeString(room);
@@ -186,15 +187,15 @@ public class Meeting implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {
+    public static final Creator<Reunion> CREATOR = new Creator<Reunion>() {
         @Override
-        public Meeting createFromParcel(Parcel in) {
-            return new Meeting(in);
+        public Reunion createFromParcel(Parcel in) {
+            return new Reunion(in);
         }
 
         @Override
-        public Meeting[] newArray(int size) {
-            return new Meeting[size];
+        public Reunion[] newArray(int size) {
+            return new Reunion[size];
         }
     };
 }

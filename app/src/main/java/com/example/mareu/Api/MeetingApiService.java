@@ -1,6 +1,6 @@
 package com.example.mareu.Api;
 
-import com.example.mareu.Model.Meeting;
+import com.example.mareu.Model.Reunion;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ public interface MeetingApiService {
 
 // TODO Ajouter des annotations
 
-    List<Meeting> getAllMeetings();
+    List<Reunion> getAllMeetings();
 
-    void addMeeting(Meeting meeting);
+    void addMeeting(Reunion reunion);
 
-    void deleteMeeting(Meeting meeting);
+    void deleteMeeting(Reunion reunion);
 
     void deleteAllMeetings();
 
