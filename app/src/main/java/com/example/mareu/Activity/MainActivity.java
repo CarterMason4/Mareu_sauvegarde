@@ -9,7 +9,6 @@ import com.example.mareu.Events.DeleteMeetingEvent;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,11 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         apiService = Di.getMeetingApiService();
 
-        fab.setOnClickListener(v -> makeToast("Ajouter une réunion"));
+        fab.setOnClickListener(view -> {
+            apiService.populerListe();
+            initList();
+        });
 
     }
 
@@ -76,10 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.delete_all) {
+
             apiService.deleteAllMeetings();
             adapter.notifyDataSetChanged();
             return true;
+
         } else if(id == R.id.filter_date) {
+
             return true;
         } else if(id == R.id.filter_room) {
             return true;
@@ -119,9 +121,4 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void makeToast(String string) {
-        Toast toast = Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
 }

@@ -20,5 +20,4 @@
         android:title="@string/filtre_salle"
         app:showAsAction="never" />
 
-
 </menu>

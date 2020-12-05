@@ -3,6 +3,8 @@ package com.example.mareu.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,11 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
+public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> implements Filterable {
 
     private MeetingApiService apiService;
 
     private List<Reunion> reunions = new ArrayList<>();
+    private List<Reunion> copie = new ArrayList<>();
 
     public MeetingAdapter(List<Reunion> reunions) {
         this.reunions = reunions;
@@ -59,15 +62,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
         // TODO Il va falloir construire le chaîne de caractères qui constituera le nom du reunion.
 
-        holder.deleteButton.setOnClickListener(v ->
-            EventBus.getDefault().post(
-                    new DeleteMeetingEvent(reunion)));
+        holder.deleteButton.setOnClickListener(view ->
+                EventBus.getDefault().post(
+                new DeleteMeetingEvent(reunion)));
+
     }
 
     @Override
     public int getItemCount() {
         return reunions.size();
     }
+
 
     class MeetingViewHolder extends RecyclerView.ViewHolder {
 
@@ -88,4 +93,24 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             ButterKnife.bind(this, itemView);
         }
     }
+
+    // TODO Implémenter le filtre
+
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            return null;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+        }
+    };
 }
