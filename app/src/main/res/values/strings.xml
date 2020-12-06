@@ -7,10 +7,25 @@
     <string name="filtre_date">Filtrer par date</string>
     <string name="populer">Populer</string>
 
+    <string name="add_meeting">Ajouter une réunion</string>
+
+    <string name="date">Date</string>
+    <string name="heure">Heure</string>
+    <string name="currentDate">xx/xx/xxxx</string>
+    <string name="currentTime">xxhxx</string>
+
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="reunion">Réunion A - 14h00 - Peach</string>
     <string name="emails">nicolas@lamzone.com, bill@lamzone.com</string>
+
+    <string-array name="emails">
+
+        <item>nicolas@lamzone.com</item>
+        <item>bill@lamzone.com</item>
+
+
+    </string-array>
 </resources>
