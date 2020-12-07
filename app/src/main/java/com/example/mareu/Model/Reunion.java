@@ -41,6 +41,8 @@ public class Reunion implements Parcelable {
      * */
     private String room;
 
+    // TODO Peut-être devrais-je carrément en faire un objet.
+
 
     /**
      * Entrants of the meeting

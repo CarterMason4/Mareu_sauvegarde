@@ -1,5 +1,6 @@
 package com.example.mareu.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.mareu.Adapter.MeetingAdapter;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         apiService = Di.getMeetingApiService();
 
         fab.setOnClickListener(view -> {
-            apiService.populerListe();
-            initList();
+
         });
 
     }
@@ -119,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MeetingAdapter(reunions);
         recyclerView.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.fab)
+    void onClick() {
+        startActivity(new Intent(this, AddMeetingActivity.class));
     }
 
 }

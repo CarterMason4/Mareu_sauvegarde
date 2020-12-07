@@ -13,6 +13,11 @@
     <string name="heure">Heure</string>
     <string name="currentDate">xx/xx/xxxx</string>
     <string name="currentTime">xxhxx</string>
+    <string name="choisir_salle">Choisissez une salle</string>
+    <string name="salle">Salle</string>
+    <string name="intervenants">Intervenants</string>
+    <string name="a_propos">Sujet de la réunion</string>
+    <string name="valider">Valider</string>
 
 
     <string name="hello_first_fragment">Hello first fragment</string>
@@ -22,10 +27,28 @@
     <string name="emails">nicolas@lamzone.com, bill@lamzone.com</string>
 
     <string-array name="emails">
-
         <item>nicolas@lamzone.com</item>
         <item>bill@lamzone.com</item>
-
-
+        <item>rudy@lamzone.com</item>
+        <item>nicolas@lamzone.com</item>
+        <item>georges@lamzone.com</item>
+        <item>billy@lamzone.com</item>
+        <item>stephen@lamzone.com</item>
+        <item>chino@lamzone.com</item>
+        <item>sergio@lamzone.com</item>
     </string-array>
+
+    <string-array name="salles">
+        <item>Salle A</item>
+        <item>Salle B</item>
+        <item>Salle C</item>
+        <item>Salle D</item>
+        <item>Salle E</item>
+        <item>Salle F</item>
+        <item>Salle G</item>
+        <item>Salle H</item>
+        <item>Salle I</item>
+        <item>Salle J</item>
+    </string-array>
+
 </resources>
