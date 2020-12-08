@@ -54,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         apiService = Di.getMeetingApiService();
 
-        fab.setOnClickListener(view -> {
 
-        });
 
     }
 
