@@ -111,7 +111,7 @@ public class Reunion implements Parcelable {
     // TODO Supprimer la vérification des NullPointerException
 
     public void setDate(String date) {
-        if(date.isEmpty() || date == null) {
+        if(date.isEmpty()) {
             this.date = "";
         } else {
             this.date = date;
@@ -119,7 +119,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setTime(String time) {
-        if(time.isEmpty() || time == null) {
+        if(time.isEmpty()) {
             this.time = "";
         } else {
             this.time = time;
@@ -127,7 +127,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setRoom(String room) {
-        if(room.isEmpty() || room == null) {
+        if(room.isEmpty()) {
             this.room = "";
         } else {
             this.room = room;
@@ -135,7 +135,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setEntrants(String entrants) {
-        if(entrants.isEmpty() || entrants == null) {
+        if(entrants.isEmpty()) {
             this.entrants = "";
         } else {
             this.entrants = entrants;
@@ -143,7 +143,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setSubject(String subject) {
-        if(subject.isEmpty() || subject == null) {
+        if(subject.isEmpty()) {
             this.subject = "";
         } else {
             this.subject = subject;

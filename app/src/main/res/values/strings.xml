@@ -51,4 +51,6 @@
         <item>Salle J</item>
     </string-array>
 
+    <string name="reunion_ajoute">Réunion ajoutée à la liste.</string>
+
 </resources>

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -12,11 +11,7 @@ import butterknife.OnClick;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,18 +20,23 @@ import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
+import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
+import com.example.mareu.Utils.Utils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import static com.example.mareu.Utils.Utils.getImageDrawable;
+import static com.example.mareu.Utils.Utils.makeToast;
 
 public class AddMeetingActivity extends AppCompatActivity{
 
@@ -65,10 +65,16 @@ public class AddMeetingActivity extends AppCompatActivity{
     MaterialButton button;
 
     private MeetingApiService apiService;
+    private List<Reunion> reunions;
     private Toolbar toolbar;
 
     private int mHour;
     private int mMinutes;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private String currentDate;
+    private String currentTime;
 
     private int orientation;
 
@@ -90,7 +96,7 @@ public class AddMeetingActivity extends AppCompatActivity{
         }
 
         apiService = Di.getMeetingApiService();
-
+        reunions = apiService.getAllMeetings();
     }
 
 
@@ -109,6 +115,7 @@ public class AddMeetingActivity extends AppCompatActivity{
         if(item.getItemId() == R.id.validerItem) {
 
             validateData();
+            makeToast(getApplicationContext(), getString(R.string.reunion_ajoute));
             return true;
         }
 
@@ -121,6 +128,8 @@ public class AddMeetingActivity extends AppCompatActivity{
         validateData();
 
         finish();
+
+        makeToast(getApplicationContext(), getString(R.string.reunion_ajoute));
     }
 
     @OnClick(R.id.date)
@@ -128,7 +137,12 @@ public class AddMeetingActivity extends AppCompatActivity{
         DatePickerDialog dialog = new DatePickerDialog(AddMeetingActivity.this, android.R.style.Theme_DeviceDefault_Dialog) {
             @Override
             public void onDateChanged(@NonNull DatePicker view, int year, int month, int dayOfMonth) {
-                String currentDate = String.valueOf(dayOfMonth) + '/' + (month + 1) + '/' + year;
+
+                mYear = year;
+                mMonth = month;
+                mDay = dayOfMonth;
+
+                currentDate = String.valueOf(dayOfMonth) + '/' + (month + 1) + '/' + year;
                 date.setText(currentDate);
             }
         };
@@ -144,7 +158,7 @@ public class AddMeetingActivity extends AppCompatActivity{
             mHour = calendar.get(Calendar.HOUR_OF_DAY);
             mMinutes = calendar.get(Calendar.MINUTE);
 
-            String currentTime = String.valueOf(hourOfDay) + 'h' + minute;
+             currentTime = String.valueOf(hourOfDay) + 'h' + minute;
             heure.setText(currentTime);
         }, mHour, mMinutes, true);
 
@@ -186,7 +200,7 @@ public class AddMeetingActivity extends AppCompatActivity{
 
         if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
             button.setVisibility(View.GONE);
-            toolbar = findViewById(R.id.land);
+            toolbar = findViewById(R.id.landscape_toolbar);
         }
 
     }
@@ -195,25 +209,31 @@ public class AddMeetingActivity extends AppCompatActivity{
 
 
     private void validateData() {
-        // TODO C'est ici qu'on doit implémenter la logique.
-
-        // TODO Vérifier qu'aucun champ n'est vide.
-        // TODO Vérifier qu'il y ait bien au moins 2 intervenants en comptant les '@'
-        // TODO Vérifier que le champ "Sujet" ne soit pas trop court.
 
 
         if(editTextSalle.getText().toString().isEmpty() ||
                 editTextIntervenants.getText().toString().isEmpty() ||
             editTextAPropos.getText().toString().isEmpty()) {
 
-            makeToast("Vous avez oublié un ou plusieurs champs.");
+            makeToast(getApplicationContext(), "Vous avez oublié un ou plusieurs champs.");
 
         } else if(getNumberOfSpeakers(editTextIntervenants.getText().toString()) < 2) {
 
-            makeToast("Pas assez d'intervants pour créer une réunion.");
+            makeToast(getApplicationContext(), "Pas assez d'intervants pour créer une réunion.");
 
         } else if(editTextAPropos.getText().toString().length() <= 3) {
-            makeToast("Sujet de réunion trop court.");
+            makeToast(getApplicationContext(), "Sujet de réunion trop court.");
+
+        }  else {
+
+            apiService.addMeeting(new Reunion(
+                reunions.get(reunions.size() - 1).getId() + 1,
+                    getImageDrawable(),
+                    currentDate,
+                    currentTime,
+                    editTextSalle.getText().toString(),
+                    editTextIntervenants.getText().toString(),
+                    editTextAPropos.getText().toString()));
         }
     }
 
@@ -225,15 +245,6 @@ public class AddMeetingActivity extends AppCompatActivity{
                 nombre++;
             }
         }
-
         return nombre;
     }
-
-    private void makeToast(String string) {
-        Toast toast = Toast.makeText(this, string, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-    }
-
-
 }
