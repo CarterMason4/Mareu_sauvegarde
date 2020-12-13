@@ -2,11 +2,12 @@ package com.example.mareu.Api;
 
 import com.example.mareu.Model.Reunion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private List<Reunion> reunions = DummyMeetingGenerator.getReunions();
+    private List<Reunion> reunions = new ArrayList<>();
 
     @Override
     public List<Reunion> getAllMeetings() {

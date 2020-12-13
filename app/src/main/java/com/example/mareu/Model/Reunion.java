@@ -46,18 +46,17 @@ public class Reunion implements Parcelable {
 
     /**
      * Entrants of the meeting
-     * @param date
+     * @param entrants
      * */
     private String entrants;
 
 
     /**
      * Subject of the meeting
-     * @param date
+     * @param subject
      * */
     private String subject;
 
-    public Reunion() {}
 
 
     public Reunion(int id, int couleur, String date, String time, String room, String entrants, String subject) {

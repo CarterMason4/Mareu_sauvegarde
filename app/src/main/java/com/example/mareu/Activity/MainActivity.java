@@ -9,6 +9,7 @@ import com.example.mareu.DI.Di;
 import com.example.mareu.Events.DeleteMeetingEvent;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
+import com.example.mareu.Utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.mareu.Utils.Utils.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         apiService = Di.getMeetingApiService();
-
-
-
     }
 
     @Override

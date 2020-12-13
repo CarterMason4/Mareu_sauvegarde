@@ -113,23 +113,15 @@ public class AddMeetingActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.validerItem) {
-
             validateData();
-            makeToast(getApplicationContext(), getString(R.string.reunion_ajoute));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @OnClick(R.id.valider_button)
     public void valider() {
-
         validateData();
-
-        finish();
-
-        makeToast(getApplicationContext(), getString(R.string.reunion_ajoute));
     }
 
     @OnClick(R.id.date)
@@ -175,6 +167,10 @@ public class AddMeetingActivity extends AppCompatActivity{
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm", Locale.FRANCE);
 
+
+        currentDate = formatDate.format(myDate);
+        currentTime = formatHeure.format(myDate);
+
         date.setText(formatDate.format(myDate));
         heure.setText(formatHeure.format(myDate));
 
@@ -209,8 +205,6 @@ public class AddMeetingActivity extends AppCompatActivity{
 
 
     private void validateData() {
-
-
         if(editTextSalle.getText().toString().isEmpty() ||
                 editTextIntervenants.getText().toString().isEmpty() ||
             editTextAPropos.getText().toString().isEmpty()) {
@@ -225,15 +219,17 @@ public class AddMeetingActivity extends AppCompatActivity{
             makeToast(getApplicationContext(), "Sujet de réunion trop court.");
 
         }  else {
-
             apiService.addMeeting(new Reunion(
-                reunions.get(reunions.size() - 1).getId() + 1,
+                reunions.size() + 1,
                     getImageDrawable(),
                     currentDate,
                     currentTime,
                     editTextSalle.getText().toString(),
                     editTextIntervenants.getText().toString(),
                     editTextAPropos.getText().toString()));
+
+
+            //finish();
         }
     }
 
