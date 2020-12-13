@@ -71,8 +71,6 @@ public class Reunion implements Parcelable {
      * */
     private String subject;
 
-
-
     public Reunion(int id, int couleur, String date, String time, String room, String entrants, String subject) {
         setId(id);
         setCouleur(couleur);

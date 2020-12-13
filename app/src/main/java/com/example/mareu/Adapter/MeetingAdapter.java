@@ -33,12 +33,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     private MeetingApiService apiService;
 
     private List<Reunion> reunions = new ArrayList<>();
-    private List<Reunion> copie = new ArrayList<>();
-    private Context context;
+    private List<Reunion> copie;
 
     public MeetingAdapter(List<Reunion> reunions) {
         this.reunions = reunions;
-        copie.addAll(this.reunions);
+        copie = new ArrayList<>(reunions);
     }
 
 
@@ -50,7 +49,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
             apiService = Di.getMeetingApiService();
 
-            context = parent.getContext();
 
         return new MeetingViewHolder(meetingView);
     }
@@ -71,7 +69,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         holder.deleteButton.setOnClickListener(view ->
                 EventBus.getDefault().post(
                 new DeleteMeetingEvent(reunion)));
-
     }
 
     @Override
@@ -110,34 +107,31 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         @Override
         protected FilterResults performFiltering(CharSequence filtre) {
 
-            List<Reunion> filteredList = new ArrayList<>();
+            List<Reunion> listeFiltree = new ArrayList<>();
 
             if(filtre == null || filtre.length() == 0) {
 
-                filteredList.addAll(copie);
+                listeFiltree.addAll(copie);
 
             } else {
 
-                String filterPattern = filtre.toString().toLowerCase().trim();
+                String filterPattern = filtre.toString().toLowerCase();
 
-                if(Character.isDigit(filterPattern.charAt(0))) {
-                    for(Reunion reunion : reunions) {
-                        if(reunion.getDate().toLowerCase().startsWith(filterPattern)) {
-                            filteredList.add(reunion);
+                for(Reunion reunion : reunions) {
+                    if(Character.isAlphabetic(filterPattern.charAt(0))) {
+                        if(reunion.getRoom().toLowerCase().contains(filterPattern)) {
+                            listeFiltree.add(reunion);
                         }
-                    }
-
-                } else {
-                    for(Reunion reunion : reunions) {
-                        if(reunion.getRoom().toLowerCase().startsWith(filterPattern)) {
-                            filteredList.add(reunion);
+                    } else if(Character.isDigit(filterPattern.charAt(0))) {
+                        if(reunion.getTime().toLowerCase().contains(filterPattern)) {
+                            listeFiltree.add(reunion);
                         }
                     }
                 }
             }
 
             FilterResults results = new FilterResults();
-            results.values = filteredList;
+            results.values = listeFiltree;
 
             return results;
         }
@@ -147,7 +141,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             reunions.clear();
             reunions.addAll((List) filterResults.values);
             notifyDataSetChanged();
-
         }
     };
 }

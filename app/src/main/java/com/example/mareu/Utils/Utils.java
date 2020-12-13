@@ -1,12 +1,9 @@
 package com.example.mareu.Utils;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.Gravity;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
 
 import java.util.ArrayList;
