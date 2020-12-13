@@ -3,6 +3,13 @@ package com.example.mareu.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.mareu.R;
+import com.example.mareu.Utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Reunion implements Parcelable {
 
     /**
@@ -11,6 +18,13 @@ public class Reunion implements Parcelable {
      * */
 
     private int id;
+
+    /**
+     * ID of the meeting in the list
+     * @param name
+     * */
+
+    private String name;
 
 
     /**
@@ -64,6 +78,7 @@ public class Reunion implements Parcelable {
         setCouleur(couleur);
         setDate(date);
         setTime(time);
+        setName(room, time);
         setRoom(room);
         setEntrants(entrants);
         setSubject(subject);
@@ -74,6 +89,8 @@ public class Reunion implements Parcelable {
     public int getId() {
         return id;
     }
+
+    public String getName() { return name; }
 
     public int getCouleur() {
         return couleur;
@@ -103,14 +120,17 @@ public class Reunion implements Parcelable {
         this.id = id;
     }
 
+    public void setName(String room, String time) {
+        this.name = constructMeetingName(room, time);
+    }
+
     public void setCouleur(int couleur) {
         this.couleur = couleur;
     }
 
-    // TODO Supprimer la vérification des NullPointerException
 
     public void setDate(String date) {
-        if(date.isEmpty()) {
+        if(date == null || date.isEmpty()) {
             this.date = "";
         } else {
             this.date = date;
@@ -118,7 +138,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setTime(String time) {
-        if(time.isEmpty()) {
+        if(time == null || time.isEmpty()) {
             this.time = "";
         } else {
             this.time = time;
@@ -126,7 +146,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setRoom(String room) {
-        if(room.isEmpty()) {
+        if(room == null || room.isEmpty()) {
             this.room = "";
         } else {
             this.room = room;
@@ -134,7 +154,7 @@ public class Reunion implements Parcelable {
     }
 
     public void setEntrants(String entrants) {
-        if(entrants.isEmpty()) {
+        if(entrants == null || entrants.isEmpty()) {
             this.entrants = "";
         } else {
             this.entrants = entrants;
@@ -142,11 +162,26 @@ public class Reunion implements Parcelable {
     }
 
     public void setSubject(String subject) {
-        if(subject.isEmpty()) {
+        if(subject == null || subject.isEmpty()) {
             this.subject = "";
         } else {
             this.subject = subject;
         }
+    }
+
+    private String constructMeetingName(String room, String time) {
+        String name;
+        List<String> prenoms = new ArrayList<>();
+        prenoms.add("Mario");
+        prenoms.add("Peach");
+        prenoms.add("Luidgi");
+
+        name = "Réunion " + room.charAt(room.length() - 1) + " - "
+                + time + " - "
+                + prenoms.get(new Random().nextInt(prenoms.size()));
+
+
+        return name;
     }
 
 

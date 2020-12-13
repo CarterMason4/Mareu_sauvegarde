@@ -1,5 +1,6 @@
 package com.example.mareu.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.mareu.DI.Di;
 import com.example.mareu.Events.DeleteMeetingEvent;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
+import com.example.mareu.Utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,9 +34,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
     private List<Reunion> reunions = new ArrayList<>();
     private List<Reunion> copie = new ArrayList<>();
+    private Context context;
 
     public MeetingAdapter(List<Reunion> reunions) {
         this.reunions = reunions;
+        copie.addAll(this.reunions);
     }
 
 
@@ -45,6 +49,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                 .inflate(R.layout.meeting_item_list, parent, false);
 
             apiService = Di.getMeetingApiService();
+
+            context = parent.getContext();
 
         return new MeetingViewHolder(meetingView);
     }
@@ -58,9 +64,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                 .fitCenter()
                 .into(holder.meetingColor);
 
-        holder.entrants.setText(reunion.getEntrants());
+        holder.meetingName.setText(reunion.getName());
 
-        // TODO Il va falloir construire le chaîne de caractères qui constituera le nom du reunion.
+        holder.entrants.setText(reunion.getEntrants());
 
         holder.deleteButton.setOnClickListener(view ->
                 EventBus.getDefault().post(
@@ -94,8 +100,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         }
     }
 
-    // TODO Implémenter le filtre
-
 
     @Override
     public Filter getFilter() {
@@ -104,12 +108,45 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
     private Filter filter = new Filter() {
         @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            return null;
+        protected FilterResults performFiltering(CharSequence filtre) {
+
+            List<Reunion> filteredList = new ArrayList<>();
+
+            if(filtre == null || filtre.length() == 0) {
+
+                filteredList.addAll(copie);
+
+            } else {
+
+                String filterPattern = filtre.toString().toLowerCase().trim();
+
+                if(Character.isDigit(filterPattern.charAt(0))) {
+                    for(Reunion reunion : reunions) {
+                        if(reunion.getDate().toLowerCase().startsWith(filterPattern)) {
+                            filteredList.add(reunion);
+                        }
+                    }
+
+                } else {
+                    for(Reunion reunion : reunions) {
+                        if(reunion.getRoom().toLowerCase().startsWith(filterPattern)) {
+                            filteredList.add(reunion);
+                        }
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
         }
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            reunions.clear();
+            reunions.addAll((List) filterResults.values);
+            notifyDataSetChanged();
 
         }
     };

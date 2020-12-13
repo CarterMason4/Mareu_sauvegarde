@@ -9,6 +9,8 @@
 
     <string name="add_meeting">Ajouter une réunion</string>
 
+    <string name="filter">Filtrer</string>
+
     <string name="date">Date</string>
     <string name="heure">Heure</string>
     <string name="currentDate">xx/xx/xxxx</string>
@@ -27,7 +29,6 @@
     <string name="emails">nicolas@lamzone.com, bill@lamzone.com</string>
 
     <string-array name="emails">
-        <item>nicolas@lamzone.com</item>
         <item>bill@lamzone.com</item>
         <item>rudy@lamzone.com</item>
         <item>nicolas@lamzone.com</item>
@@ -36,6 +37,12 @@
         <item>stephen@lamzone.com</item>
         <item>chino@lamzone.com</item>
         <item>sergio@lamzone.com</item>
+    </string-array>
+
+    <string-array name="prenoms">
+        <item>Peach</item>
+        <item>Mario</item>
+        <item>Luidgi</item>
     </string-array>
 
     <string-array name="salles">

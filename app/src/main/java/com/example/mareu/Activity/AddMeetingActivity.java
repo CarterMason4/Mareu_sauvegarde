@@ -202,8 +202,6 @@ public class AddMeetingActivity extends AppCompatActivity{
     }
 
 
-
-
     private void validateData() {
         if(editTextSalle.getText().toString().isEmpty() ||
                 editTextIntervenants.getText().toString().isEmpty() ||
@@ -215,7 +213,7 @@ public class AddMeetingActivity extends AppCompatActivity{
 
             makeToast(getApplicationContext(), "Pas assez d'intervants pour créer une réunion.");
 
-        } else if(editTextAPropos.getText().toString().length() <= 3) {
+        } else if(editTextAPropos.getText().toString().length() < 4) {
             makeToast(getApplicationContext(), "Sujet de réunion trop court.");
 
         }  else {
@@ -228,8 +226,9 @@ public class AddMeetingActivity extends AppCompatActivity{
                     editTextIntervenants.getText().toString(),
                     editTextAPropos.getText().toString()));
 
+            makeToast(getApplicationContext(), getString(R.string.reunion_ajoute));
 
-            //finish();
+            finish();
         }
     }
 

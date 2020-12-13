@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private List<Reunion> reunions = new ArrayList<>();
+    private List<Reunion> reunions = DummyMeetingGenerator.getReunions();
 
     @Override
     public List<Reunion> getAllMeetings() {
@@ -16,7 +16,7 @@ public class DummyMeetingApiService implements MeetingApiService {
 
     @Override
     public void addMeeting(Reunion reunion) {
-        reunions.add(reunion);
+        reunions.add(0, reunion);
     }
 
     @Override
