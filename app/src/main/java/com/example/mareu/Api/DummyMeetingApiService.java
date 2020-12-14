@@ -33,10 +33,4 @@ public class DummyMeetingApiService implements MeetingApiService {
     public void deleteAllMeetings() {
         reunions.clear();
     }
-
-
-    @Override
-    public void populerListe() {
-        reunions = DummyMeetingGenerator.getReunions();
-    }
 }

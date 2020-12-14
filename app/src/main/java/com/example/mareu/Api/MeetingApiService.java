@@ -15,7 +15,4 @@ public interface MeetingApiService {
     void deleteMeeting(Reunion reunion);
 
     void deleteAllMeetings();
-
-    void populerListe();
-
 }

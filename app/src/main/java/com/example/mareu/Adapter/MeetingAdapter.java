@@ -118,14 +118,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                 String filterPattern = filtre.toString().toLowerCase();
 
                 for(Reunion reunion : reunions) {
-                    if(Character.isAlphabetic(filterPattern.charAt(0))) {
-                        if(reunion.getRoom().toLowerCase().contains(filterPattern)) {
-                            listeFiltree.add(reunion);
-                        }
-                    } else if(Character.isDigit(filterPattern.charAt(0))) {
-                        if(reunion.getTime().toLowerCase().contains(filterPattern)) {
-                            listeFiltree.add(reunion);
-                        }
+                    if(reunion.getRoom().toLowerCase().contains(filterPattern) ||
+                            reunion.getDate().toLowerCase().contains(filterPattern)) {
+                        listeFiltree.add(reunion);
                     }
                 }
             }

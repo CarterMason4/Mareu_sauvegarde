@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
      @BindView(R.id.fab)
      FloatingActionButton fab;
 
+     ImageButton deleteButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+
+        deleteButton = findViewById(R.id.deleteButton);
 
         apiService = Di.getMeetingApiService();
     }
@@ -77,6 +83,20 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
                 return false;
+            }
+        });
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                fab.setEnabled(false);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                fab.setEnabled(true);
+                return true;
             }
         });
 
@@ -118,5 +138,4 @@ public class MainActivity extends AppCompatActivity {
     void onClick() {
         startActivity(new Intent(this, AddMeetingActivity.class));
     }
-
 }
