@@ -25,7 +25,6 @@ import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
-import com.example.mareu.Utils.Utils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -38,7 +37,7 @@ import java.util.Locale;
 import static com.example.mareu.Utils.Utils.getImageDrawable;
 import static com.example.mareu.Utils.Utils.makeToast;
 
-public class AddMeetingActivity extends AppCompatActivity{
+public class AddMeetingActivity extends AppCompatActivity {
 
     @Nullable
     @BindView(R.id.date)
@@ -67,6 +66,7 @@ public class AddMeetingActivity extends AppCompatActivity{
     private MeetingApiService apiService;
     private List<Reunion> reunions;
     private Toolbar toolbar;
+
 
     private int mHour;
     private int mMinutes;
@@ -167,12 +167,12 @@ public class AddMeetingActivity extends AppCompatActivity{
         SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         SimpleDateFormat formatHeure = new SimpleDateFormat("HH:mm", Locale.FRANCE);
 
-
         currentDate = formatDate.format(myDate);
         currentTime = formatHeure.format(myDate);
 
         date.setText(formatDate.format(myDate));
         heure.setText(formatHeure.format(myDate));
+
 
         if(orientation ==  Configuration.ORIENTATION_PORTRAIT) {
             ArrayAdapter<String> salleAdapter = new ArrayAdapter<>(
@@ -181,6 +181,9 @@ public class AddMeetingActivity extends AppCompatActivity{
                     getResources().getStringArray(R.array.salles));
 
             editTextSalle.setAdapter(salleAdapter);
+
+            // TODO il faut faire en sorte que le même intervenant n'apparaisse pas deux fois.
+
 
             ArrayAdapter<String> intervenantsAdapter = new ArrayAdapter<>(
                     this,
@@ -198,9 +201,7 @@ public class AddMeetingActivity extends AppCompatActivity{
             button.setVisibility(View.GONE);
             toolbar = findViewById(R.id.landscape_toolbar);
         }
-
     }
-
 
     private void validateData() {
         if(editTextSalle.getText().toString().isEmpty() ||
@@ -211,10 +212,10 @@ public class AddMeetingActivity extends AppCompatActivity{
 
         } else if(getNumberOfSpeakers(editTextIntervenants.getText().toString()) < 2) {
 
-            makeToast(getApplicationContext(), "Pas assez d'intervants pour créer une réunion.");
+            makeToast(getApplicationContext(), getString(R.string.pas_assez_intervenants));
 
         } else if(editTextAPropos.getText().toString().length() < 4) {
-            makeToast(getApplicationContext(), "Sujet de réunion trop court.");
+            makeToast(getApplicationContext(), getString(R.string.sujet_trop_court));
 
         }  else {
             apiService.addMeeting(new Reunion(

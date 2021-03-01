@@ -195,7 +195,6 @@ public class Reunion implements Parcelable {
     }
 
 
-
     protected Reunion(Parcel in) {
         id = in.readInt();
         couleur = in.readInt();

@@ -15,4 +15,6 @@ public interface MeetingApiService {
     void deleteMeeting(Reunion reunion);
 
     void deleteAllMeetings();
+
+    List<Reunion> filterMeetings(List<Reunion> copie, CharSequence filter);
 }

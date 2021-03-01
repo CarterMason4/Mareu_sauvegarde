@@ -9,7 +9,6 @@ import com.example.mareu.DI.Di;
 import com.example.mareu.Events.DeleteMeetingEvent;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
-import com.example.mareu.Utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
      @BindView(R.id.fab)
      FloatingActionButton fab;
 
-     ImageButton deleteButton;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
-        deleteButton = findViewById(R.id.deleteButton);
 
         apiService = Di.getMeetingApiService();
     }
@@ -135,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.fab)
-    void onClick() {
+    public void onClick() {
         startActivity(new Intent(this, AddMeetingActivity.class));
     }
 }

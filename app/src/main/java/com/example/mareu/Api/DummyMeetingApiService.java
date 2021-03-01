@@ -33,4 +33,28 @@ public class DummyMeetingApiService implements MeetingApiService {
     public void deleteAllMeetings() {
         reunions.clear();
     }
+
+    @Override
+    public List<Reunion> filterMeetings(List<Reunion> copie, CharSequence filtre) {
+
+        List<Reunion> listeFiltree = new ArrayList<>();
+
+        if(filtre == null || filtre.length() == 0) {
+
+             listeFiltree.addAll(copie);
+
+        } else {
+
+            String filterPattern = filtre.toString().toLowerCase();
+
+            for(Reunion reunion : reunions) {
+                if(reunion.getRoom().toLowerCase().contains(filterPattern) ||
+                        reunion.getDate().toLowerCase().contains(filterPattern)) {
+                    listeFiltree.add(reunion);
+                }
+            }
+        }
+
+        return listeFiltree;
+    }
 }

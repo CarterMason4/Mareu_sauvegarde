@@ -107,26 +107,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         @Override
         protected FilterResults performFiltering(CharSequence filtre) {
 
-            List<Reunion> listeFiltree = new ArrayList<>();
-
-            if(filtre == null || filtre.length() == 0) {
-
-                listeFiltree.addAll(copie);
-
-            } else {
-
-                String filterPattern = filtre.toString().toLowerCase();
-
-                for(Reunion reunion : reunions) {
-                    if(reunion.getRoom().toLowerCase().contains(filterPattern) ||
-                            reunion.getDate().toLowerCase().contains(filterPattern)) {
-                        listeFiltree.add(reunion);
-                    }
-                }
-            }
-
             FilterResults results = new FilterResults();
-            results.values = listeFiltree;
+            results.values = apiService.filterMeetings(copie, filtre);
 
             return results;
         }

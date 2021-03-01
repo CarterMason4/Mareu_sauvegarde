@@ -23,7 +23,7 @@
             app:title="@string/add_meeting"
             app:titleTextColor="@color/white"/>
 
-    </com.google.android.material.appbar.AppBarLayout>-->
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
