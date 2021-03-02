@@ -32,12 +32,13 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
     private MeetingApiService apiService;
 
-    private List<Reunion> reunions = new ArrayList<>();
+    private List<Reunion> reunions;
     private List<Reunion> copie;
 
-    public MeetingAdapter(List<Reunion> reunions) {
+    public MeetingAdapter(List<Reunion> reunions, MeetingApiService apiService) {
         this.reunions = reunions;
-        copie = new ArrayList<>(reunions);
+        this.copie = new ArrayList<>(reunions);
+        this.apiService = apiService;
     }
 
 
@@ -46,10 +47,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View meetingView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.meeting_item_list, parent, false);
-
-            apiService = Di.getMeetingApiService();
-
-
         return new MeetingViewHolder(meetingView);
     }
 
@@ -108,7 +105,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         protected FilterResults performFiltering(CharSequence filtre) {
 
             FilterResults results = new FilterResults();
-            results.values = apiService.filterMeetings(copie, filtre);
+            results.values = apiService.filterMeetings(filtre);
+
+            FilterResults newResutlts = new FilterResults();
+            newResutlts.values = null; // Pour l'instant
 
             return results;
         }

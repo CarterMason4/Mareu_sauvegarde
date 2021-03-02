@@ -7,8 +7,10 @@ import com.example.mareu.Adapter.MeetingAdapter;
 import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
 import com.example.mareu.Events.DeleteMeetingEvent;
+import com.example.mareu.Events.FilteredListEvent;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
+import com.example.mareu.Utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,12 +121,18 @@ public class MainActivity extends AppCompatActivity {
     public void deleteMeeting(DeleteMeetingEvent event) {
         apiService.deleteMeeting(event.reunion);
         initList();
+        Utils.makeToast(getApplicationContext(), getString(R.string.reunion_supprimee));
+    }
+
+    @Subscribe
+    public void filteredMeetingList(FilteredListEvent event) {
+
     }
 
     private void initList() {
         reunions = apiService.getAllMeetings();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MeetingAdapter(reunions);
+        adapter = new MeetingAdapter(reunions, apiService);
         recyclerView.setAdapter(adapter);
     }
 

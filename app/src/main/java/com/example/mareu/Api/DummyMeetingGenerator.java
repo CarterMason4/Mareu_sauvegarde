@@ -10,8 +10,6 @@ import java.util.List;
 
 public abstract class DummyMeetingGenerator {
 
-    // TODO Enlever la "salle"
-
     public static List<Reunion> REUNIONS = Arrays.asList(
             new Reunion(1, Utils.getImageDrawable(),
                     "02/12/2020", "15h00", "Salle A", "bill@lamzone.com, bill@lamzone.com, bill@lamzone.combill@lamzone.com",

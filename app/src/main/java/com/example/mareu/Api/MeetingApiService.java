@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MeetingApiService {
 
-// TODO Ajouter des annotations
+    // TODO Ajouter des annotations
 
     List<Reunion> getAllMeetings();
 
@@ -16,5 +16,5 @@ public interface MeetingApiService {
 
     void deleteAllMeetings();
 
-    List<Reunion> filterMeetings(List<Reunion> copie, CharSequence filter);
+    List<Reunion> filterMeetings(CharSequence filter);
 }

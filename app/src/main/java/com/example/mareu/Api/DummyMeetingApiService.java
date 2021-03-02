@@ -35,14 +35,12 @@ public class DummyMeetingApiService implements MeetingApiService {
     }
 
     @Override
-    public List<Reunion> filterMeetings(List<Reunion> copie, CharSequence filtre) {
+    public List<Reunion> filterMeetings(CharSequence filtre) {
 
         List<Reunion> listeFiltree = new ArrayList<>();
 
         if(filtre == null || filtre.length() == 0) {
-
-             listeFiltree.addAll(copie);
-
+             return DummyMeetingGenerator.getReunions();
         } else {
 
             String filterPattern = filtre.toString().toLowerCase();

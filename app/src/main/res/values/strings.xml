@@ -23,6 +23,7 @@
     <string name="pas_assez_intervenants">Pas assez d\'intervenants pour créer une réunion.</string>
     <string name="sujet_trop_court">Sujet de réunion trop court.</string>
     <string name="salle_manquante">Vous devez sélectionner une salle.</string>
+    <string name="champs_oublies">Vous avez oublié un ou plusieurs champs.</string>
 
 
     <string name="hello_first_fragment">Hello first fragment</string>
@@ -31,16 +32,7 @@
     <string name="reunion">Réunion A - 14h00 - Peach</string>
     <string name="emails">nicolas@lamzone.com, bill@lamzone.com</string>
 
-    <string-array name="emails">
-        <item>bill@lamzone.com</item>
-        <item>rudy@lamzone.com</item>
-        <item>nicolas@lamzone.com</item>
-        <item>georges@lamzone.com</item>
-        <item>billy@lamzone.com</item>
-        <item>stephen@lamzone.com</item>
-        <item>chino@lamzone.com</item>
-        <item>sergio@lamzone.com</item>
-    </string-array>
+    <string name="reunion_supprimee">Réunion supprimée avec succès !</string>
 
     <string-array name="prenoms">
         <item>Peach</item>

@@ -29,4 +29,18 @@ public class Utils {
         toast.show();
     }
 
+    public static List<String> entrants() {
+        List<String> entrants = new ArrayList<>();
+
+        entrants.add("stephen@lamzone.com");
+        entrants.add("chino@lamzone.com");
+        entrants.add("sergio@lamzone.com");
+        entrants.add("abe@lamzone.com");
+        entrants.add("chi@lamzone.com");
+        entrants.add("bill@lamzone.com");
+        entrants.add("nicolas@lamzone.com");
+        entrants.add("billy@lamzone.com");
+
+        return entrants;
+    }
 }

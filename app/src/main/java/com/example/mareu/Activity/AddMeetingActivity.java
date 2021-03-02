@@ -25,6 +25,7 @@ import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.Di;
 import com.example.mareu.Model.Reunion;
 import com.example.mareu.R;
+import com.example.mareu.Utils.Utils;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -184,11 +185,10 @@ public class AddMeetingActivity extends AppCompatActivity {
 
             // TODO il faut faire en sorte que le même intervenant n'apparaisse pas deux fois.
 
-
             ArrayAdapter<String> intervenantsAdapter = new ArrayAdapter<>(
                     this,
                     android.R.layout.simple_list_item_1,
-                    getResources().getStringArray(R.array.emails));
+                    Utils.entrants());
 
             editTextIntervenants.setAdapter(intervenantsAdapter);
 
@@ -208,7 +208,7 @@ public class AddMeetingActivity extends AppCompatActivity {
                 editTextIntervenants.getText().toString().isEmpty() ||
             editTextAPropos.getText().toString().isEmpty()) {
 
-            makeToast(getApplicationContext(), "Vous avez oublié un ou plusieurs champs.");
+            makeToast(getApplicationContext(), getString(R.string.champs_oublies));
 
         } else if(getNumberOfSpeakers(editTextIntervenants.getText().toString()) < 2) {
 
