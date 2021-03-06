@@ -41,7 +41,7 @@ public class DummyMeetingApiService implements MeetingApiService {
 
         if(filtre == null || filtre.length() == 0) {
              return DummyMeetingGenerator.getReunions();
-        } else {
+        } else {    
 
             String filterPattern = filtre.toString().toLowerCase();
 

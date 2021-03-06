@@ -30,6 +30,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,6 +69,8 @@ public class AddMeetingActivity extends AppCompatActivity {
     private List<Reunion> reunions;
     private Toolbar toolbar;
 
+    private List<String> currentEntrants;
+
 
     private int mHour;
     private int mMinutes;
@@ -86,6 +89,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         orientation = getResources().getConfiguration().orientation;
+        currentEntrants = new ArrayList<>();
 
         setUpViews();
 
@@ -107,7 +111,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getMenuInflater().inflate(R.menu.menu_ajoute_reunion_landscape, menu);
         }
-
         return true;
     }
 
@@ -127,7 +130,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     @OnClick(R.id.date)
     public void openDatePicker() {
-        DatePickerDialog dialog = new DatePickerDialog(AddMeetingActivity.this, android.R.style.Theme_DeviceDefault_Dialog) {
+        DatePickerDialog dialog = new DatePickerDialog(AddMeetingActivity.this) {
             @Override
             public void onDateChanged(@NonNull DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -146,6 +149,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     @OnClick(R.id.heure)
     public void openTimePicker() {
         TimePickerDialog dialog = new TimePickerDialog(AddMeetingActivity.this, (view, hourOfDay, minute) -> {
+
             Calendar calendar = Calendar.getInstance();
 
             mHour = calendar.get(Calendar.HOUR_OF_DAY);

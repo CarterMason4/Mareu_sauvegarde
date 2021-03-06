@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void filteredMeetingList(FilteredListEvent event) {
-
+        apiService.filterMeetings(event.filter);
     }
 
     private void initList() {

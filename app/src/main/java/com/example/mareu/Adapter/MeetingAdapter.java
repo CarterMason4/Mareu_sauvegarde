@@ -110,6 +110,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
             FilterResults newResutlts = new FilterResults();
             newResutlts.values = null; // Pour l'instant
 
+            // Comment récuperer le résultat de la variable "newResults" ?
+
             return results;
         }
 
