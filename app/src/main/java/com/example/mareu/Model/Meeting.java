@@ -3,14 +3,11 @@ package com.example.mareu.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.mareu.R;
-import com.example.mareu.Utils.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Reunion implements Parcelable {
+public class Meeting implements Parcelable {
 
     /**
      * ID of the meeting in the list
@@ -71,7 +68,7 @@ public class Reunion implements Parcelable {
      * */
     private String subject;
 
-    public Reunion(int id, int couleur, String date, String time, String room, String entrants, String subject) {
+    public Meeting(int id, int couleur, String date, String time, String room, String entrants, String subject) {
         setId(id);
         setCouleur(couleur);
         setDate(date);
@@ -178,7 +175,6 @@ public class Reunion implements Parcelable {
                 + time + " - "
                 + prenoms.get(new Random().nextInt(prenoms.size()));
 
-
         return name;
     }
 
@@ -195,7 +191,7 @@ public class Reunion implements Parcelable {
     }
 
 
-    protected Reunion(Parcel in) {
+    protected Meeting(Parcel in) {
         id = in.readInt();
         couleur = in.readInt();
         date = in.readString();
@@ -221,15 +217,15 @@ public class Reunion implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Reunion> CREATOR = new Creator<Reunion>() {
+    public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {
         @Override
-        public Reunion createFromParcel(Parcel in) {
-            return new Reunion(in);
+        public Meeting createFromParcel(Parcel in) {
+            return new Meeting(in);
         }
 
         @Override
-        public Reunion[] newArray(int size) {
-            return new Reunion[size];
+        public Meeting[] newArray(int size) {
+            return new Meeting[size];
         }
     };
 }

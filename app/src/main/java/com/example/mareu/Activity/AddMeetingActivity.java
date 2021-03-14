@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -22,8 +23,8 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.example.mareu.Api.MeetingApiService;
-import com.example.mareu.DI.Di;
-import com.example.mareu.Model.Reunion;
+import com.example.mareu.DI.DI;
+import com.example.mareu.Model.Meeting;
 import com.example.mareu.R;
 import com.example.mareu.Utils.Utils;
 import com.google.android.material.button.MaterialButton;
@@ -33,8 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.example.mareu.Utils.Utils.getImageDrawable;
 import static com.example.mareu.Utils.Utils.makeToast;
@@ -66,7 +69,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     MaterialButton button;
 
     private MeetingApiService apiService;
-    private List<Reunion> reunions;
+    private List<Meeting> meetings;
     private Toolbar toolbar;
 
     private List<String> currentEntrants;
@@ -100,8 +103,8 @@ public class AddMeetingActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        apiService = Di.getMeetingApiService();
-        reunions = apiService.getAllMeetings();
+        apiService = DI.getMeetingApiService();
+        meetings = apiService.getAllMeetings();
     }
 
 
@@ -130,7 +133,7 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     @OnClick(R.id.date)
     public void openDatePicker() {
-        DatePickerDialog dialog = new DatePickerDialog(AddMeetingActivity.this) {
+        DatePickerDialog dialog = new DatePickerDialog(AddMeetingActivity.this, android.R.style.Theme_DeviceDefault_Dialog) {
             @Override
             public void onDateChanged(@NonNull DatePicker view, int year, int month, int dayOfMonth) {
 
@@ -178,7 +181,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         date.setText(formatDate.format(myDate));
         heure.setText(formatHeure.format(myDate));
 
-
         if(orientation ==  Configuration.ORIENTATION_PORTRAIT) {
             ArrayAdapter<String> salleAdapter = new ArrayAdapter<>(
                     this,
@@ -197,6 +199,13 @@ public class AddMeetingActivity extends AppCompatActivity {
             editTextIntervenants.setAdapter(intervenantsAdapter);
 
             editTextIntervenants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+            editTextIntervenants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // editTextIntervenants.getText().toString().contains(Utils.entrants().get())
+                }
+            });
 
             toolbar = findViewById(R.id.meetingToolbar);
         }
@@ -222,8 +231,8 @@ public class AddMeetingActivity extends AppCompatActivity {
             makeToast(getApplicationContext(), getString(R.string.sujet_trop_court));
 
         }  else {
-            apiService.addMeeting(new Reunion(
-                reunions.size() + 1,
+            apiService.addMeeting(new Meeting(
+                meetings.size() + 1,
                     getImageDrawable(),
                     currentDate,
                     currentTime,
@@ -246,5 +255,20 @@ public class AddMeetingActivity extends AppCompatActivity {
             }
         }
         return nombre;
+    }
+
+    private boolean isSpeakerPresentTwice() {
+
+        boolean isPresentTwice = false;
+
+        Map<String, Integer> entrants = new LinkedHashMap<>();
+
+        for(String entrant : Utils.entrants()) {
+            entrants.put(entrant, 0);
+        }
+
+        String allOfEntrants = editTextIntervenants.getText().toString();
+
+        return false;
     }
 }

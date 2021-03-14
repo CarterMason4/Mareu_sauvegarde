@@ -1,22 +1,16 @@
 package com.example.mareu.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.mareu.Api.MeetingApiService;
-import com.example.mareu.DI.Di;
 import com.example.mareu.Events.DeleteMeetingEvent;
-import com.example.mareu.Model.Reunion;
+import com.example.mareu.Model.Meeting;
 import com.example.mareu.R;
-import com.example.mareu.Utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -28,18 +22,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> implements Filterable {
+//public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> implements Filterable {
+public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
 
-    private MeetingApiService apiService;
+    //private MeetingApiService apiService;
 
-    private List<Reunion> reunions;
-    private List<Reunion> copie;
+    private List<Meeting> meetings;
+    private List<Meeting> copie;
 
-    public MeetingAdapter(List<Reunion> reunions, MeetingApiService apiService) {
-        this.reunions = reunions;
-        this.copie = new ArrayList<>(reunions);
-        this.apiService = apiService;
+    //public MeetingAdapter(List<Meeting> meetings, MeetingApiService apiService) {
+    public MeetingAdapter(List<Meeting> meetings) {
+        this.meetings = meetings;
+        this.copie = new ArrayList<>(meetings);
+        //this.apiService = apiService;
     }
+
 
 
     @NonNull
@@ -52,25 +49,25 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
-        Reunion reunion = reunions.get(position);
+        Meeting meeting = meetings.get(position);
 
         Glide.with(holder.meetingColor.getContext())
-                .load(reunion.getCouleur())
+                .load(meeting.getCouleur())
                 .fitCenter()
                 .into(holder.meetingColor);
 
-        holder.meetingName.setText(reunion.getName());
+        holder.meetingName.setText(meeting.getName());
 
-        holder.entrants.setText(reunion.getEntrants());
+        holder.entrants.setText(meeting.getEntrants());
 
         holder.deleteButton.setOnClickListener(view ->
                 EventBus.getDefault().post(
-                new DeleteMeetingEvent(reunion)));
+                new DeleteMeetingEvent(meeting)));
     }
 
     @Override
     public int getItemCount() {
-        return reunions.size();
+        return meetings.size();
     }
 
 
@@ -94,7 +91,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         }
     }
 
+    public void updateMeetings(List<Meeting> meetings) {
+        this.meetings.clear();
+        this.meetings.addAll(meetings);
+        notifyDataSetChanged();
+    }
 
+
+    /**
     @Override
     public Filter getFilter() {
         return filter;
@@ -103,23 +107,26 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     private Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence filtre) {
+            EventBus.getDefault().post(new FilteredListEvent(filtre));
 
             FilterResults results = new FilterResults();
             results.values = apiService.filterMeetings(filtre);
 
             FilterResults newResutlts = new FilterResults();
-            newResutlts.values = null; // Pour l'instant
+            newResutlts.values = EventBus.getDefault().post(new FilteredListEvent(filtre));
 
             // Comment récuperer le résultat de la variable "newResults" ?
+            // La ligne 112 pose problème.
 
             return results;
         }
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            reunions.clear();
-            reunions.addAll((List) filterResults.values);
+            meetings.clear();
+            meetings.addAll((List) filterResults.values);
             notifyDataSetChanged();
         }
     };
+    */
 }

@@ -1,21 +1,18 @@
 package com.example.mareu.Events;
 
-import com.example.mareu.Model.Reunion;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.mareu.Model.Meeting;
 
 public class DeleteMeetingEvent {
 
     /**
      * Meeting to delete
-     * @param reunion
+     * @param meeting
      * */
 
-    public Reunion reunion;
+    public Meeting meeting;
 
 
-    public DeleteMeetingEvent(Reunion reunion) {
-        this.reunion = reunion;
+    public DeleteMeetingEvent(Meeting meeting) {
+        this.meeting = meeting;
     }
 }

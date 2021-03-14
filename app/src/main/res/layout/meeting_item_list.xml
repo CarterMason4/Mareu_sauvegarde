@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:textStyle="bold"
-        android:text="@string/reunion"
+        android:text="@string/meeting"
         app:layout_constraintStart_toEndOf="@+id/meeting_color"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="15sp"

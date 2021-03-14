@@ -5,10 +5,9 @@ import android.os.Bundle;
 
 import com.example.mareu.Adapter.MeetingAdapter;
 import com.example.mareu.Api.MeetingApiService;
-import com.example.mareu.DI.Di;
+import com.example.mareu.DI.DI;
 import com.example.mareu.Events.DeleteMeetingEvent;
-import com.example.mareu.Events.FilteredListEvent;
-import com.example.mareu.Model.Reunion;
+import com.example.mareu.Model.Meeting;
 import com.example.mareu.R;
 import com.example.mareu.Utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,9 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,12 +30,10 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.mareu.Utils.Utils.*;
-
 public class MainActivity extends AppCompatActivity {
 
     private MeetingApiService apiService;
-    private List<Reunion> reunions = new ArrayList<>();
+    private List<Meeting> meetings = new ArrayList<>();
     private MeetingAdapter adapter;
 
 
@@ -59,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        apiService = Di.getMeetingApiService();
+        apiService = DI.getMeetingApiService();
     }
 
     @Override
@@ -77,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                applyFilter(newText);
+                // adapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -119,25 +115,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void deleteMeeting(DeleteMeetingEvent event) {
-        apiService.deleteMeeting(event.reunion);
+        apiService.deleteMeeting(event.meeting);
         initList();
         Utils.makeToast(getApplicationContext(), getString(R.string.reunion_supprimee));
     }
 
-    @Subscribe
-    public void filteredMeetingList(FilteredListEvent event) {
-        apiService.filterMeetings(event.filter);
-    }
-
-    private void initList() {
-        reunions = apiService.getAllMeetings();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MeetingAdapter(reunions, apiService);
-        recyclerView.setAdapter(adapter);
-    }
 
     @OnClick(R.id.fab)
     public void onClick() {
         startActivity(new Intent(this, AddMeetingActivity.class));
+    }
+
+
+    private void applyFilter(String text) {
+        List<Meeting> searchResult = apiService.filterMeetings(text);
+        adapter.updateMeetings(searchResult);
+    }
+
+    private void initList() {
+        meetings = apiService.getAllMeetings();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MeetingAdapter(meetings);
+        recyclerView.setAdapter(adapter);
     }
 }

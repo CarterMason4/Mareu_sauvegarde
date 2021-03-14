@@ -1,29 +1,29 @@
 package com.example.mareu.Api;
 
-import com.example.mareu.Model.Reunion;
+import com.example.mareu.Model.Meeting;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private List<Reunion> reunions = DummyMeetingGenerator.getReunions();
+    private List<Meeting> meetings = DummyMeetingGenerator.getMeetings();
 
     @Override
-    public List<Reunion> getAllMeetings() {
-        return reunions;
+    public List<Meeting> getAllMeetings() {
+        return meetings;
     }
 
     @Override
-    public void addMeeting(Reunion reunion) {
-        reunions.add(0, reunion);
+    public void addMeeting(Meeting meeting) {
+        meetings.add(0, meeting);
     }
 
     @Override
-    public void deleteMeeting(Reunion reunion) {
-        for(Reunion loopReunion : reunions) {
-            if(loopReunion.equals(reunion)) {
-                reunions.remove(reunion);
+    public void deleteMeeting(Meeting meeting) {
+        for(Meeting loopMeeting : meetings) {
+            if(loopMeeting.equals(meeting)) {
+                meetings.remove(meeting);
                 break;
             }
         }
@@ -31,28 +31,26 @@ public class DummyMeetingApiService implements MeetingApiService {
 
     @Override
     public void deleteAllMeetings() {
-        reunions.clear();
+        meetings.clear();
     }
 
     @Override
-    public List<Reunion> filterMeetings(CharSequence filtre) {
-
-        List<Reunion> listeFiltree = new ArrayList<>();
+    public List<Meeting> filterMeetings(CharSequence filtre) {
+        List<Meeting> listeFiltree = new ArrayList<>();
 
         if(filtre == null || filtre.length() == 0) {
-             return DummyMeetingGenerator.getReunions();
-        } else {    
+             return DummyMeetingGenerator.getMeetings();
+        } else {
 
             String filterPattern = filtre.toString().toLowerCase();
 
-            for(Reunion reunion : reunions) {
-                if(reunion.getRoom().toLowerCase().contains(filterPattern) ||
-                        reunion.getDate().toLowerCase().contains(filterPattern)) {
-                    listeFiltree.add(reunion);
+            for(Meeting meeting : meetings) {
+                if(meeting.getRoom().toLowerCase().contains(filterPattern) ||
+                        meeting.getDate().toLowerCase().contains(filterPattern)) {
+                    listeFiltree.add(meeting);
                 }
             }
         }
-
         return listeFiltree;
     }
 }
