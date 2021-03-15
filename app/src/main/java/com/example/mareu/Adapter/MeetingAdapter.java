@@ -22,21 +22,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> implements Filterable {
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
 
-    //private MeetingApiService apiService;
 
     private List<Meeting> meetings;
     private List<Meeting> copie;
 
-    //public MeetingAdapter(List<Meeting> meetings, MeetingApiService apiService) {
     public MeetingAdapter(List<Meeting> meetings) {
         this.meetings = meetings;
         this.copie = new ArrayList<>(meetings);
-        //this.apiService = apiService;
     }
-
 
 
     @NonNull
@@ -96,37 +91,4 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
         this.meetings.addAll(meetings);
         notifyDataSetChanged();
     }
-
-
-    /**
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
-    private Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence filtre) {
-            EventBus.getDefault().post(new FilteredListEvent(filtre));
-
-            FilterResults results = new FilterResults();
-            results.values = apiService.filterMeetings(filtre);
-
-            FilterResults newResutlts = new FilterResults();
-            newResutlts.values = EventBus.getDefault().post(new FilteredListEvent(filtre));
-
-            // Comment récuperer le résultat de la variable "newResults" ?
-            // La ligne 112 pose problème.
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            meetings.clear();
-            meetings.addAll((List) filterResults.values);
-            notifyDataSetChanged();
-        }
-    };
-    */
 }
