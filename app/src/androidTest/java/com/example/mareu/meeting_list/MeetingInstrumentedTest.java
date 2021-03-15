@@ -1,12 +1,12 @@
-package com.example.mareu;
+package com.example.mareu.meeting_list;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
 import com.example.mareu.Activity.AddMeetingActivity;
 import com.example.mareu.Activity.MainActivity;
-import com.example.mareu.Utils.DeleteViewAction;
+import com.example.mareu.R;
+import com.example.mareu.utils.DeleteViewAction;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -28,11 +28,10 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static com.example.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static com.openclassrooms.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.junit.Assert.*;
 
 /**
@@ -71,7 +70,7 @@ public class MeetingInstrumentedTest {
         onView(ViewMatchers.withId(R.id.list_meetings)).check(withItemCount(list_size));
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_meetings))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction());
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
         onView(ViewMatchers.withId(R.id.list_meetings)).check(withItemCount(list_size - 1));
     }
