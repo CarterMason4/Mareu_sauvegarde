@@ -68,10 +68,10 @@ public class MeetingInstrumentedTest {
     @Test
     public void meetingListDeleteButtonShouldDeleteItem() {
         onView(ViewMatchers.withId(R.id.list_meetings)).check(withItemCount(list_size));
-        // When perform a click on a delete icon
+
         onView(ViewMatchers.withId(R.id.list_meetings))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
-        // Then : the number of element is 11
+
         onView(ViewMatchers.withId(R.id.list_meetings)).check(withItemCount(list_size - 1));
     }
 
@@ -95,19 +95,20 @@ public class MeetingInstrumentedTest {
 
         onView(withId(R.id.valider_button)).perform(click());
 
+        /*Return to main activity.*/
+
         onView(withId(R.id.list_meetings)).check(matches(isDisplayed()));
-
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size + 1));
-
-
     }
 
-
-
     @Test
+    public void filterShouldWork() {}
+
+
+    /*@Test
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.mareu", appContext.getPackageName());
-    }
+    }*/
 }
