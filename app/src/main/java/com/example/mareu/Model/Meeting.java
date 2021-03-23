@@ -1,7 +1,10 @@
 package com.example.mareu.Model;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,7 +192,6 @@ public class Meeting implements Parcelable {
                 .append("Subject : ").append(subject).append('\n')
                 .toString();
     }
-
 
     protected Meeting(Parcel in) {
         id = in.readInt();

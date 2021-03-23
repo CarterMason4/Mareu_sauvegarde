@@ -61,7 +61,7 @@ public class MeetingServiceTest {
     @Test
     public void deleteMeeting() {
 
-        /*1 - get a meeting*/
+        /*1 - get a meeting */
         Meeting newMeeting = apiService.getAllMeetings().get(0);
 
         /*2 -  delete that meeting*/
@@ -70,7 +70,7 @@ public class MeetingServiceTest {
         /*3 - retrieve all meetings */
         List<Meeting> allMeetings = apiService.getAllMeetings();
 
-        /*4 - test that the retrieved meeting above has succeussfully been deleted.*/
+        /*4 - test that the retrieved meeting above has succeussfully been deleted. */
         assertNotEquals(allMeetings.get(0), newMeeting);
     }
 

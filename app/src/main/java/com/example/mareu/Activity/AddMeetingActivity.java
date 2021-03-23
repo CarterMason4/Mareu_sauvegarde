@@ -162,6 +162,7 @@ public class AddMeetingActivity extends AppCompatActivity {
             heure.setText(currentTime);
         }, mHour, mMinutes, true);
 
+
         dialog.show();
     }
 
@@ -255,20 +256,5 @@ public class AddMeetingActivity extends AppCompatActivity {
             }
         }
         return nombre;
-    }
-
-    private boolean isSpeakerPresentTwice() {
-
-        boolean isPresentTwice = false;
-
-        Map<String, Integer> entrants = new LinkedHashMap<>();
-
-        for(String entrant : Utils.entrants()) {
-            entrants.put(entrant, 0);
-        }
-
-        String allOfEntrants = editTextIntervenants.getText().toString();
-
-        return false;
     }
 }

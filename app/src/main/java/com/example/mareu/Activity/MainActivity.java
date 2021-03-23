@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Meeting> meetings = new ArrayList<>();
     private MeetingAdapter adapter;
 
+    // TODO Remplacer le MultiCompleteTextView par un EdiText avec petit FAB
+    // TODO La personne ajoute l'intertevenant en appuyant sur le FAB
+    // TODO Avec un petit RecyclerView qui montre les emails ajoutés.
+
 
      @BindView(R.id.list_meetings)
      RecyclerView recyclerView;

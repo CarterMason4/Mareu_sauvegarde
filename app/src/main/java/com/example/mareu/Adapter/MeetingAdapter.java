@@ -1,11 +1,13 @@
 package com.example.mareu.Adapter;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mareu.Events.DeleteMeetingEvent;
@@ -23,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingViewHolder> {
-
 
     private List<Meeting> meetings;
     private List<Meeting> copie;
@@ -87,8 +88,10 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     }
 
     public void updateMeetings(List<Meeting> meetings) {
-        this.meetings.clear();
-        this.meetings.addAll(meetings);
-        notifyDataSetChanged();
+        if(meetings != null && !meetings.isEmpty()) {
+            this.meetings.clear();
+            this.meetings.addAll(meetings);
+            notifyDataSetChanged();
+        }
     }
 }
