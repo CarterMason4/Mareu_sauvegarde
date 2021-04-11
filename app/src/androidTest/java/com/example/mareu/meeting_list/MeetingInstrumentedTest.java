@@ -7,13 +7,13 @@ import com.example.mareu.Activity.AddMeetingActivity;
 import com.example.mareu.Activity.MainActivity;
 import com.example.mareu.R;
 import com.example.mareu.utils.DeleteViewAction;
+import com.example.mareu.utils.ReplaceTextViewAction;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -24,6 +24,9 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -77,32 +80,38 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void addMeetingActivityShouldAddMeeting() {
-        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), AddMeetingActivity.class);
-        addMeetingActivity.launchActivity(intent);
 
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size));
+
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), AddMeetingActivity.class);
+        addMeetingActivity.launchActivity(intent);
 
         onView(withId(R.id.editTextSalle)).check(matches(isDisplayed()));
         onView(withId(R.id.editTextViewIntervenants)).check(matches(isDisplayed()));
         onView(withId(R.id.editTextAPropos)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.editTextSalle)).perform(clearText(),typeText("Salle A"));
-        onView(withId(R.id.editTextViewIntervenants)).perform(clearText(), typeText("stephen@lamzone.com, chino@lamzone.com, sergio@lamzone.com, abe@lamzone.com"));
-        onView(withId(R.id.editTextAPropos)).perform(clearText(), typeText("Développement de l'album \"Genesis\""));
+        onView(withId(R.id.editTextSalle)).perform(typeText("Salle A"));
+        onView(withId(R.id.editTextViewIntervenants)).perform(typeText("stephen@lamzone.com, chino@lamzone.com, sergio@lamzone.com, abe@lamzone.com"));
+        onView(withId(R.id.editTextAPropos)).perform(typeText("Developpement de Genesis"));
 
-        onView(withId(R.id.textViewTime)).perform(clearText(), typeText("09h30"));
-        onView(withId(R.id.textViewDate)).perform(clearText(), typeText("04/03/2021"));
+        onView(withId(R.id.textViewTime)).perform(new ReplaceTextViewAction("09h30"));
+        onView(withId(R.id.textViewDate)).perform(new ReplaceTextViewAction("15/05/2022"));
 
-        onView(withId(R.id.valider_button)).perform(click());
+        onView(withId(R.id.valider_button))
+                .perform(closeSoftKeyboard())
+                .perform(click());
 
         /*Return to main activity.*/
 
         onView(withId(R.id.list_meetings)).check(matches(isDisplayed()));
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size + 1));
+
     }
 
     @Test
-    public void filterShouldWork() {}
+    public void filterShouldWork() {
+        onView(withId(R.id.filtrer)).perform(click());
+    }
 
 
     /*@Test

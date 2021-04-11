@@ -64,7 +64,7 @@ public class MeetingServiceTest {
         /*1 - get a meeting */
         Meeting newMeeting = apiService.getAllMeetings().get(0);
 
-        /*2 -  delete that meeting*/
+        /*2 -  delete that meeting */
         apiService.deleteMeeting(newMeeting);
 
         /*3 - retrieve all meetings */
@@ -77,6 +77,22 @@ public class MeetingServiceTest {
     @Test
     public void filterMeetings() {
         // Tests the meetings filter.
+
+        // 1 - Retrieve a meeting from the list.
+        // 2 - Test the filter method with a string that the fitler uses to show a result.
+        // 3 - See if the filter is showing the correct result.
+
+
+        // 1
+        Meeting meeting = apiService.getAllMeetings().get(0);
+
+        // 2
+        Meeting filteredMeeting = apiService.filterMeetings("Salle A").get(0);
+
+        // 3
+
+        assertEquals(meeting, filteredMeeting);
+
     }
 
 }
