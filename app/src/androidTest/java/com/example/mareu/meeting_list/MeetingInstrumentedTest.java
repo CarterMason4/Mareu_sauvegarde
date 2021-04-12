@@ -2,14 +2,24 @@ package com.example.mareu.meeting_list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import com.example.mareu.Activity.AddMeetingActivity;
 import com.example.mareu.Activity.MainActivity;
+import com.example.mareu.Api.DummyMeetingApiService;
+import com.example.mareu.Api.MeetingApiService;
+import com.example.mareu.DI.DI;
+import com.example.mareu.Model.Meeting;
 import com.example.mareu.R;
+import com.example.mareu.utils.CustomMatchers;
 import com.example.mareu.utils.DeleteViewAction;
 import com.example.mareu.utils.ReplaceTextViewAction;
 
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -17,25 +27,41 @@ import androidx.test.filters.LargeTest;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+
+import static androidx.test.espresso.Espresso.*;
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.mareu.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static com.google.android.material.internal.ContextUtils.getActivity;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -48,6 +74,7 @@ public class MeetingInstrumentedTest {
 
 
     private final int list_size = 12;
+    private MeetingApiService apiService;
     private MainActivity mActivity;
 
     @Rule
@@ -61,6 +88,7 @@ public class MeetingInstrumentedTest {
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
+        apiService = DI.getNewMeetingApiService();
     }
 
     @Test
@@ -106,11 +134,31 @@ public class MeetingInstrumentedTest {
         onView(withId(R.id.list_meetings)).check(matches(isDisplayed()));
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size + 1));
 
+        // On doit vérifier que le meeting ajouté est bien le bon.
+
+
+        Meeting meeting = apiService.getAllMeetings().get(0);
+
+        /*onView(withId(R.id.list_meetings))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, null))
+                .check(matches(withText(meeting.get)));*/
+
     }
 
     @Test
     public void filterShouldWork() {
-        onView(withId(R.id.filtrer)).perform(click());
+        onView(withId(R.id.filtrer))
+                .perform(click());
+
+        onView(isAssignableFrom(EditText.class)).perform(typeText("Salle A"));
+
+        // onData(allOf(is(instanceOf(String.class)), withText("Réunion A"))).check(matches(isDisplayed()));
+
+        onView(withText("Réunion A - 15h00 - Luidgi"))
+                .inRoot(withDecorView(not(Matchers.is(mActivityRule.getActivity().getWindow().getDecorView()))))
+                .check(matches(isDisplayed()));
+
+        // onData(allOf(is(instanceOf(String.class)), CustomMatchers.withItemContent("Réunion A"))).check(matches(isDisplayed()));
     }
 
 
