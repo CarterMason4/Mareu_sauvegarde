@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
     android:orientation="vertical">
 
 
@@ -71,7 +73,7 @@
         android:ellipsize="end"
         android:maxLength="50"
         android:maxLines="1"
-        android:text="@string/emails"
+        tools:text="@string/emails"
         app:layout_constraintBottom_toBottomOf="@+id/meeting_color"
         app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintStart_toEndOf="@+id/meeting_color"

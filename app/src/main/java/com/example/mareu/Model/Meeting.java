@@ -71,12 +71,12 @@ public class Meeting implements Parcelable {
      * */
     private String subject;
 
-    public Meeting(int id, int couleur, String date, String name, String time, String room, String entrants, String subject) {
+    public Meeting(int id, int couleur, String date, String time, String room, String entrants, String subject) {
         setId(id);
         setCouleur(couleur);
         setDate(date);
         setTime(time);
-        setName(name);
+        setName(subject);
         setRoom(room);
         setEntrants(entrants);
         setSubject(subject);
