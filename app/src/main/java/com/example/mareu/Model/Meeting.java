@@ -71,12 +71,12 @@ public class Meeting implements Parcelable {
      * */
     private String subject;
 
-    public Meeting(int id, int couleur, String date, String time, String room, String entrants, String subject) {
+    public Meeting(int id, int couleur, String date, String name, String time, String room, String entrants, String subject) {
         setId(id);
         setCouleur(couleur);
         setDate(date);
         setTime(time);
-        setName(room, time);
+        setName(name);
         setRoom(room);
         setEntrants(entrants);
         setSubject(subject);
@@ -118,8 +118,8 @@ public class Meeting implements Parcelable {
         this.id = id;
     }
 
-    public void setName(String room, String time) {
-        this.name = constructMeetingName(room, time);
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setCouleur(int couleur) {

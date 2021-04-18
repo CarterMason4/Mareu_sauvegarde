@@ -39,7 +39,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     @Override
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View meetingView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.meeting_item_list, parent, false);
+                .inflate(R.layout.meeting_item_list_old, parent, false);
         return new MeetingViewHolder(meetingView);
     }
 
@@ -52,7 +52,11 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
                 .fitCenter()
                 .into(holder.meetingColor);
 
-        holder.meetingName.setText(meeting.getName());
+        // holder.meetingName.setText(meeting.getName());
+
+        String meetingName = meeting.getSubject() + " - " + meeting.getTime() + " - " + meeting.getRoom();
+
+        holder.meetingName.setText(meetingName);
 
         holder.entrants.setText(meeting.getEntrants());
 

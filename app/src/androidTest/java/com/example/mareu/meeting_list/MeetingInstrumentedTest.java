@@ -133,16 +133,6 @@ public class MeetingInstrumentedTest {
 
         onView(withId(R.id.list_meetings)).check(matches(isDisplayed()));
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size + 1));
-
-        // On doit vérifier que le meeting ajouté est bien le bon.
-
-
-        Meeting meeting = apiService.getAllMeetings().get(0);
-
-        /*onView(withId(R.id.list_meetings))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, null))
-                .check(matches(withText(meeting.get)));*/
-
     }
 
     @Test
