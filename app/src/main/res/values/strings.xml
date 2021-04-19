@@ -34,24 +34,13 @@
 
     <string name="reunion_supprimee">Réunion supprimée avec succès !</string>
 
-    <string-array name="prenoms">
+    <string-array name="salles">
         <item>Peach</item>
         <item>Mario</item>
         <item>Luidgi</item>
     </string-array>
 
-    <string-array name="salles">
-        <item>Salle A</item>
-        <item>Salle B</item>
-        <item>Salle C</item>
-        <item>Salle D</item>
-        <item>Salle E</item>
-        <item>Salle F</item>
-        <item>Salle G</item>
-        <item>Salle H</item>
-        <item>Salle I</item>
-        <item>Salle J</item>
-    </string-array>
+
 
     <string name="reunion_ajoute">Réunion ajoutée à la liste.</string>
     <string name="just_an_image">Just an image</string>

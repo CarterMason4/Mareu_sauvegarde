@@ -56,7 +56,7 @@ public abstract class DummyMeetingGenerator {
         return new Meeting(MEETINGS.size() + 1, Utils.getImageDrawable(),
                 "02/12/2020",
                 "15h00",
-                "Salle A",
+                "Mario",
                 "bill@lamzone.com, bill@lamzone.com, bill@lamzone.combill@lamzone.com",
                 "Développement de la nouvelle appli'");
     }

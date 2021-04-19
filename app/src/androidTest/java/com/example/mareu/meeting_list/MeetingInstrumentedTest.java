@@ -118,12 +118,12 @@ public class MeetingInstrumentedTest {
         onView(withId(R.id.editTextViewIntervenants)).check(matches(isDisplayed()));
         onView(withId(R.id.editTextAPropos)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.editTextSalle)).perform(typeText("Salle A"));
-        onView(withId(R.id.editTextViewIntervenants)).perform(typeText("stephen@lamzone.com, chino@lamzone.com, sergio@lamzone.com, abe@lamzone.com"));
-        onView(withId(R.id.editTextAPropos)).perform(typeText("Developpement de Genesis"));
+        onView(withId(R.id.heure)).perform(new ReplaceTextViewAction("09h30"));
+        onView(withId(R.id.date)).perform(new ReplaceTextViewAction("15/05/2022"));
 
-        onView(withId(R.id.textViewTime)).perform(new ReplaceTextViewAction("09h30"));
-        onView(withId(R.id.textViewDate)).perform(new ReplaceTextViewAction("15/05/2022"));
+        onView(withId(R.id.editTextSalle)).perform(typeText("Peach"));
+        onView(withId(R.id.editTextViewIntervenants)).perform(typeText("stephen@lamzone.com, chino@lamzone.com, sergio@lamzone.com, abe@lamzone.com"));
+        onView(withId(R.id.editTextAPropos)).perform(typeText("Nouvel album"));
 
         onView(withId(R.id.valider_button))
                 .perform(closeSoftKeyboard())
@@ -140,13 +140,18 @@ public class MeetingInstrumentedTest {
         onView(withId(R.id.filtrer))
                 .perform(click());
 
-        onView(isAssignableFrom(EditText.class)).perform(typeText("Salle A"));
+        onView(isAssignableFrom(EditText.class)).perform(typeText("Mario"));
 
         // onData(allOf(is(instanceOf(String.class)), withText("Réunion A"))).check(matches(isDisplayed()));
 
-        onView(withText("Réunion A - 15h00 - Luidgi"))
+
+
+        onView(withText("Développement de la nouvelle appli' - 15h00 - Mario"))
                 .inRoot(withDecorView(not(Matchers.is(mActivityRule.getActivity().getWindow().getDecorView()))))
                 .check(matches(isDisplayed()));
+
+        onView(withId(R.id.filtrer))
+                .perform(closeSoftKeyboard());
 
         // onData(allOf(is(instanceOf(String.class)), CustomMatchers.withItemContent("Réunion A"))).check(matches(isDisplayed()));
     }
