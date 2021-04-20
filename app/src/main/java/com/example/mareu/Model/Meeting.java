@@ -1,14 +1,7 @@
 package com.example.mareu.Model;
 
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.view.Gravity;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Meeting implements Parcelable {
 
@@ -55,8 +48,6 @@ public class Meeting implements Parcelable {
      * */
     private String room;
 
-    // TODO Peut-être devrais-je carrément en faire un objet.
-
 
     /**
      * Entrants of the meeting
@@ -71,8 +62,8 @@ public class Meeting implements Parcelable {
      * */
     private String subject;
 
-    public Meeting(int id, int couleur, String date, String time, String room, String entrants, String subject) {
-        setId(id);
+
+    public Meeting(int couleur, String date, String time, String room, String entrants, String subject) {
         setCouleur(couleur);
         setDate(date);
         setTime(time);
@@ -82,13 +73,17 @@ public class Meeting implements Parcelable {
         setSubject(subject);
     }
 
+    public Meeting(int id, int couleur, String date, String time, String room, String entrants, String subject) {
+        this(couleur, date, time, room, entrants, subject);
+        setId(id);
+    }
+
 
 
     public int getId() {
         return id;
     }
 
-    public String getName() { return name; }
 
     public int getCouleur() {
         return couleur;
@@ -166,21 +161,6 @@ public class Meeting implements Parcelable {
             this.subject = subject;
         }
     }
-
-    private String constructMeetingName(String room, String time) {
-        String name;
-        List<String> prenoms = new ArrayList<>();
-        prenoms.add("Mario");
-        prenoms.add("Peach");
-        prenoms.add("Luidgi");
-
-        name = "Réunion " + room.charAt(room.length() - 1) + " - "
-                + time + " - "
-                + prenoms.get(new Random().nextInt(prenoms.size()));
-
-        return name;
-    }
-
 
     @Override
     public String toString() {

@@ -1,20 +1,15 @@
 package com.example.mareu;
 
-import android.view.Gravity;
-import android.widget.Toast;
-
 import com.example.mareu.Api.DummyMeetingGenerator;
 import com.example.mareu.Api.MeetingApiService;
 import com.example.mareu.DI.DI;
 import com.example.mareu.Model.Meeting;
-
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.List;
-
 import static org.junit.Assert.*;
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -37,6 +32,7 @@ public class MeetingServiceTest {
     /**
      * Retrieves all the meetings.
      * */
+
     @Test
     public void getAllMeetings() {
         List<Meeting> meetings = apiService.getAllMeetings();
@@ -47,6 +43,7 @@ public class MeetingServiceTest {
     /**
      * Test that adds a meeting and tests if the meeting has really been added.
      * */
+
     @Test
     public void addMeeting() {
         Meeting newMeeting = DummyMeetingGenerator.generateMeeting();
@@ -58,39 +55,24 @@ public class MeetingServiceTest {
     /**
      * Test that deletes a meeting and tests if the meeting has really been deleted.
      * */
+
     @Test
     public void deleteMeeting() {
-
-        /*1 - get a meeting */
         Meeting newMeeting = apiService.getAllMeetings().get(0);
-
-        /*2 -  delete that meeting */
         apiService.deleteMeeting(newMeeting);
-
-        /*3 - retrieve all meetings */
         List<Meeting> allMeetings = apiService.getAllMeetings();
-
-        /*4 - test that the retrieved meeting above has succeussfully been deleted. */
         assertNotEquals(allMeetings.get(0), newMeeting);
     }
 
+    /**
+     * Test the filter.
+     * */
+
+
     @Test
     public void filterMeetings() {
-        // Tests the meetings filter.
-
-        // 1 - Retrieve a meeting from the list.
-        // 2 - Test the filter method with a string that the fitler uses to show a result.
-        // 3 - See if the filter is showing the correct result.
-
-
-        // 1
         Meeting meeting = apiService.getAllMeetings().get(0);
-
-        // 2
         Meeting filteredMeeting = apiService.filterMeetings("Salle A").get(0);
-
-        // 3
-
         assertEquals(meeting, filteredMeeting);
 
     }

@@ -16,6 +16,7 @@ public class DummyMeetingApiService implements MeetingApiService {
 
     @Override
     public void addMeeting(Meeting meeting) {
+        meeting.setId(meetings.size() + 1);
         meetings.add(0, meeting);
     }
 
@@ -27,11 +28,6 @@ public class DummyMeetingApiService implements MeetingApiService {
                 break;
             }
         }
-    }
-
-    @Override
-    public void deleteAllMeetings() {
-        meetings.clear();
     }
 
     @Override

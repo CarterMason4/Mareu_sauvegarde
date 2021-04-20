@@ -1,13 +1,11 @@
 package com.example.mareu.Adapter;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.mareu.Events.DeleteMeetingEvent;
@@ -100,7 +98,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<MeetingAdapter.MeetingV
     }
 
     public void updateMeetings(List<Meeting> meetings) {
-        if(meetings != null && !meetings.isEmpty()) {
+        if(meetings != null) {
             this.meetings.clear();
             this.meetings.addAll(meetings);
             notifyDataSetChanged();

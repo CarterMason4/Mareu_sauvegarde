@@ -69,7 +69,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     MaterialButton button;
 
     private MeetingApiService apiService;
-    private List<Meeting> meetings;
     private Toolbar toolbar;
 
     private List<String> currentEntrants;
@@ -104,7 +103,6 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
 
         apiService = DI.getMeetingApiService();
-        meetings = apiService.getAllMeetings();
     }
 
 
@@ -233,7 +231,6 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         }  else {
             apiService.addMeeting(new Meeting(
-                meetings.size() + 1,
                     getImageDrawable(),
                     currentDate,
                     currentTime,

@@ -1,15 +1,11 @@
 package com.example.mareu.utils;
 
-
 import android.view.View;
-
-
 import com.example.mareu.R;
-
 import org.hamcrest.Matcher;
-
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
+
 
 public class DeleteViewAction implements ViewAction {
     @Override
