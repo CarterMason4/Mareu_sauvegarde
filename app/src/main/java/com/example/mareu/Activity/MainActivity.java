@@ -123,11 +123,6 @@ public class MainActivity extends AppCompatActivity {
         Utils.makeToast(getApplicationContext(), getString(R.string.reunion_supprimee));
     }
 
-    public void test() {
-        System.out.print("Lol tu me fais rire !");
-    }
-
-
     @OnClick(R.id.fab)
     public void onClick() {
         startActivity(new Intent(this, AddMeetingActivity.class));
