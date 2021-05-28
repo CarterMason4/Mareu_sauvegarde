@@ -88,7 +88,6 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void addMeetingActivityShouldAddMeeting() {
-
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size));
 
         onView(withId(R.id.fab)).perform(click());
@@ -108,8 +107,6 @@ public class MeetingInstrumentedTest {
                 .perform(closeSoftKeyboard())
                 .perform(click());
 
-        // Return to main activity.
-
         onView(withId(R.id.list_meetings)).check(matches(isDisplayed()));
         onView(withId(R.id.list_meetings)).check(withItemCount(list_size + 1));
     }
@@ -120,7 +117,6 @@ public class MeetingInstrumentedTest {
 
     @Test
     public void filterShouldWorkWithRoom() {
-
         onView(withId(R.id.filtrer))
                 .perform(click());
 
